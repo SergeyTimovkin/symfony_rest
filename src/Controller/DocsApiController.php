@@ -19,8 +19,25 @@ class DocsApiController
         METHOD: DELETE
         <br>
         URL: api/client/{id}
+        <br>
+        RETURN: {  status: code, message: "text"  }
         <hr>
-        
+        <b>Обновление записи клиент-адресс по айди:</b>
+        <br>
+        METHOD: PUT
+        <br>
+        URL: api/client/{id}
+        <br>
+        Example data: {
+                 "client_id": 1,
+                 "home_id": 2,
+                 "porch": 24,
+                  "floor": 2,
+                  "intercom": 31,
+                 "apartment": 4
+                }
+        <br>
+        <hr>
         ');
     }
 }
