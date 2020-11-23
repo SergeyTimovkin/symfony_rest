@@ -12,6 +12,15 @@ class DocsApiController
      * @Route("/")
      */
     public function index(){
-        return new Response('Docs API');
+        return new Response('
+        <hr>
+        <b>Удаление записи клиент-адресс по айди:</b>
+        <br>
+        METHOD: DELETE
+        <br>
+        URL: api/client/{id}
+        <hr>
+        
+        ');
     }
 }

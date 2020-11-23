@@ -34,13 +34,40 @@ class AddressController extends AbstractController
 
 
     /**
-     * @param CustomerAddressesRepository $postRepository
+     * @param CustomerAddressesRepository $customerAddressesRepository
      * @return JsonResponse
      * @Route("/clients", name="posts", methods={"GET"})
      */
-    public function getClients(CustomerAddressesRepository $customerAddressesRepository){
+    public function getClients(CustomerAddressesRepository $customerAddressesRepository)
+    {
         $data = $customerAddressesRepository->findAll();
         return $this->response($data);
+    }
+
+    /**
+     * @param EntityManagerInterface $entityManager
+     * @param CustomerAddressesRepository $customerAddressesRepository
+     * @param $id
+     * @return JsonResponse
+     * @Route("/client/{id}", name="client_delete", methods={"DELETE"})
+     */
+    public function deleteClientAddress(EntityManagerInterface $entityManager, CustomerAddressesRepository $customerAddressesRepository, $id)
+    {
+        $customer = $customerAddressesRepository->find($id);
+
+        if (!$customer) {
+            return $this->response(
+                [
+                    'status' => 404,
+                    'errors' => "Client not found",
+                ], 404);
+        }
+        $entityManager->remove($customer);
+        $entityManager->flush();
+        return $this->response([
+            'status' => 200,
+            'errors' => "Client address deleted successfully",
+        ]);
     }
 
 }
