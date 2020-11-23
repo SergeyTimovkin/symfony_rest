@@ -9,7 +9,6 @@ use Doctrine\Persistence\ManagerRegistry;
 /**
  * @method CustomerAddresses|null find($id, $lockMode = null, $lockVersion = null)
  * @method CustomerAddresses|null findOneBy(array $criteria, array $orderBy = null)
- * @method CustomerAddresses[]    findAll()
  * @method CustomerAddresses[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
 class CustomerAddressesRepository extends ServiceEntityRepository
@@ -18,6 +17,12 @@ class CustomerAddressesRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, CustomerAddresses::class);
     }
+
+//    public function findAll() {
+//        return $this->createQueryBuilder('u')
+//            ->getQuery()
+//            ->getArrayResult();
+//    }
 
     // /**
     //  * @return CustomerAddresses[] Returns an array of CustomerAddresses objects
