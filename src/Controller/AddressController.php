@@ -52,12 +52,11 @@ class AddressController extends AbstractController
     /**
      * @param CustomerAddressesRepository $customerAddressesRepository
      * @return JsonResponse
-     * @Route("/clients", name="posts", methods={"GET"})
+     * @Route("/client/{id}", name="client", methods={"GET"})
      */
-    public function getClients(CustomerAddressesRepository $customerAddressesRepository)
+    public function getClientAddress(CustomerAddressesRepository $customerAddressesRepository, $id)
     {
-        $data = $customerAddressesRepository->findAll();
-        return $this->response($data);
+        return $this->response($customerAddressesRepository->find($id));
     }
 
 

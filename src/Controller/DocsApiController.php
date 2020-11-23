@@ -38,6 +38,15 @@ class DocsApiController
                 }
         <br>
         <hr>
+         <b>Просмотр записи клиент-адресс по айди:</b>
+        <br>
+        METHOD: GET
+        <br>
+        URL: api/client/{id}
+        <br>
+        RETURN: client-address data
+        <hr>
+        
         ');
     }
 }

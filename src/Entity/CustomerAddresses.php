@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(repositoryClass=CustomerAddressesRepository::class)
  */
-class CustomerAddresses
+class CustomerAddresses implements \JsonSerializable
 {
     /**
      * @ORM\Id
@@ -158,5 +158,18 @@ class CustomerAddresses
         $this->home = $home;
 
         return $this;
+    }
+
+    public function jsonSerialize()
+    {
+        return [
+            "id" => $this->getId(),
+            "client_id" => $this->getClientId(),
+            "home_id" => $this->getHomeId(),
+            "porch" => $this->getPorch(),
+            "floor" => $this->getFloor(),
+            "intercom" => $this->getIntercom(),
+            "apartment" => $this->getApartment()
+        ];
     }
 }
