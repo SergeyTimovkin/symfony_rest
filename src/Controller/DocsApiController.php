@@ -44,7 +44,7 @@ class DocsApiController
         <br>
         URL: api/client/{id}
         <br>
-        RETURN: client-address data
+        RETURN: client-address data JSON
         <hr>
         
         ');

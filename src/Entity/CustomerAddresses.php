@@ -165,6 +165,11 @@ class CustomerAddresses implements \JsonSerializable
         return [
             "id" => $this->getId(),
             "client_id" => $this->getClientId(),
+            "client" => $this->getClient()->getName(),
+            "region" => $this->getHome()->getStreet()->getCity()->getRegion()->getName(),
+            "city"  => $this->getHome()->getStreet()->getCity()->getName(),
+            "street" => $this->getHome()->getStreet()->getName(),
+            "home" => $this->getHome()->getNumber(),
             "home_id" => $this->getHomeId(),
             "porch" => $this->getPorch(),
             "floor" => $this->getFloor(),
