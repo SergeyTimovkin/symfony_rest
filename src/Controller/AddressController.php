@@ -8,6 +8,7 @@ use App\Entity\CustomerAddresses;
 use App\Repository\ClientRepository;
 use App\Repository\CustomerAddressesRepository;
 use App\Repository\HomeRepository;
+use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -52,6 +53,7 @@ class AddressController extends AbstractController
 
     /**
      * @param CustomerAddressesRepository $customerAddressesRepository
+     * @param $id
      * @return JsonResponse
      * @Route("/client/{id}", name="client", methods={"GET"})
      */
@@ -80,74 +82,70 @@ class AddressController extends AbstractController
         HomeRepository $homeRepository
     )
     {
-        //   try {
-        $request = $this->transformJsonBody($request);
+        try {
+            $request = $this->transformJsonBody($request);
 
-        $clientId = $request->get('client_id');
+            $clientId = $request->get('client_id');
 
-        if ($clientId) {
-            if (!$clientRepository->find($clientId)) {
-                return $this->response(
-                    [
-                        'status' => 404,
-                        'message' => "ClientId not found",
-                    ], 404);
+            if ($clientId) {
+                if (!$clientRepository->find($clientId)) {
+                    return $this->response(
+                        [
+                            'status' => 404,
+                            'message' => "ClientId not found",
+                        ], 404);
 
+                }
             }
-        }
 
-        $homeId = $request->get('home_id');
-        if ($homeId) {
-            if (!$homeRepository->find($homeId)) {
-                return $this->response(
-                    [
-                        'status' => 404,
-                        'message' => "HomeId not found",
-                    ], 404);
+            $homeId = $request->get('home_id');
+            if ($homeId) {
+                if (!$homeRepository->find($homeId)) {
+                    return $this->response(
+                        [
+                            'status' => 404,
+                            'message' => "HomeId not found",
+                        ], 404);
 
+                }
             }
+
+            $customerAddresses = new CustomerAddresses();
+            $customerAddresses->setClient($clientRepository->find($clientId));
+            $customerAddresses->setHome($homeRepository->find($homeId));
+
+            $porch = $request->get('porch');
+            if ($porch)
+                $customerAddresses->setPorch($porch);
+
+            $floor = $request->get('floor');
+            if ($floor)
+                $customerAddresses->setFloor($floor);
+
+            $intercom = $request->get('intercom');
+            if ($intercom)
+                $customerAddresses->setIntercom($intercom);
+
+            $apartment = $request->get('apartment');
+            if ($apartment)
+                $customerAddresses->setApartment($apartment);
+
+            $entityManager->persist($customerAddresses);
+            $entityManager->flush();
+
+            $data = [
+                'status' => 200,
+                'success' => "Customer-Address added successfully",
+            ];
+            return $this->response($data);
+
+        } catch (\Exception $e) {
+            $data = [
+                'status' => 422,
+                'errors' => "Data no valid",
+            ];
+            return $this->response($data, 422);
         }
-
-        $customerAddresses = new CustomerAddresses();
-
-        //todo r13sergey передавать экземпляры $client и $home
-        $customerAddresses->setClientId($clientId);
-        $customerAddresses->setHomeId($homeId);
-
-        //todo r13sergey dublicate code
-        $porch = $request->get('porch');
-        if ($porch)
-            $customerAddresses->setPorch($porch);
-
-        $floor = $request->get('floor');
-        if ($floor)
-            $customerAddresses->setFloor($floor);
-
-        $intercom = $request->get('intercom');
-        if ($intercom)
-            $customerAddresses->setIntercom($intercom);
-
-        $apartment = $request->get('apartment');
-        if ($apartment)
-            $customerAddresses->setApartment($apartment);
-
-        var_dump($customerAddresses);
-        $entityManager->persist($customerAddresses);
-        $entityManager->flush();
-
-        $data = [
-            'status' => 200,
-            'success' => "Customer-Address added successfully",
-        ];
-        return $this->response($data);
-
-        //  } catch (\Exception $e) {
-        $data = [
-            'status' => 422,
-            'errors' => "Data no valid",
-        ];
-        return $this->response($data, 422);
-        // }
 
     }
 

@@ -46,9 +46,21 @@ class DocsApiController
                  "apartment": 4
                 }
         <br>
-      
         <hr>
-        
+        <b>Добавление записи:</b>
+        <br>
+        METHOD: POST
+        <br>
+        URL: api/client
+        <br>
+        Example data: {
+               "client_id": "1",
+               "home_id": "2",
+               "floor": 4,
+               "porch": 3,
+               "intercom": 4
+                }
+         <hr>
         ');
     }
 }
