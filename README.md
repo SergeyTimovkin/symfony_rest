@@ -11,3 +11,6 @@
 Файл с тестовыми данными: 
 
 _testdata.sql_
+
+
+`composer install`
