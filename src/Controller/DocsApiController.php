@@ -11,8 +11,17 @@ class DocsApiController
     /**
      * @Route("/")
      */
-    public function index(){
+    public function index()
+    {
         return new Response('
+        <hr>
+         <b>Просмотр записи клиент-адресс по айди:</b>
+        <br>
+        METHOD: GET
+        <br>
+        URL: api/client/{id}
+        <br>
+        RETURN: client-address data JSON
         <hr>
         <b>Удаление записи клиент-адресс по айди:</b>
         <br>
@@ -37,14 +46,7 @@ class DocsApiController
                  "apartment": 4
                 }
         <br>
-        <hr>
-         <b>Просмотр записи клиент-адресс по айди:</b>
-        <br>
-        METHOD: GET
-        <br>
-        URL: api/client/{id}
-        <br>
-        RETURN: client-address data JSON
+      
         <hr>
         
         ');
